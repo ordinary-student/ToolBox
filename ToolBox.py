@@ -25,8 +25,8 @@ from PySide2.QtCore import QSize, Qt
 appname = '''ToolBox'''
 appmessage = '''一款小小的自用的工具箱'''
 author = '''ordinary-student'''
-version = 'v2.0.2'
-last_update = '2021-06-28'
+version = '''v2.0.3'''
+last_update = '''2021-07-12'''
 left_widget_qss = '''
 QListWidget, QListView, QTreeWidget, QTreeView {
     outline: 0px;
@@ -743,7 +743,7 @@ class ToolBox(QMainWindow):
         '''关于'''
         # 显示弹窗
         QMessageBox.about(self, f'关于{appname}',
-                          "{}<br>{}<br>author：<a href='https://github.com/ordinary-student'>{}</a><br>版本：{}<br>Last-Update：{}<br>© Copyright {}".format(appname, appmessage, author, version, last_update, last_update[0:4]))
+                          "{}<br>{}<br>author：<a href='https://github.com/ordinary-student'>{}</a><br>版本：{}<br>Last-Update：{}".format(appname, appmessage, author, version, last_update))
 
     def show_stackedWidget(self, index: int):
         '''显示对应的右侧页面'''
