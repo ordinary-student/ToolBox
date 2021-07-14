@@ -25,8 +25,8 @@ from PySide2.QtCore import QSize, Qt
 appname = '''ToolBox'''
 appmessage = '''一款小小的自用的工具箱'''
 author = '''ordinary-student'''
-version = '''v2.0.3'''
-last_update = '''2021-07-12'''
+version = '''v2.1.0'''
+last_update = '''2021-07-14'''
 left_widget_qss = '''
 QListWidget, QListView, QTreeWidget, QTreeView {
     outline: 0px;
@@ -141,11 +141,12 @@ class ToolBox(QMainWindow):
 
     def initUI(self):
         '''加载界面ui'''
-        # 获取本地IP
-        self.hostname = socket.gethostname()
-        self.localip = socket.gethostbyname(self.hostname)
+        # 多网卡情况下获取本地IP
+        ips = socket.gethostbyname_ex(socket.gethostname())[2]
+        # 最后一个IP，一般为无线网卡IP
+        self.localip = ips[-1]
         # 窗口标题
-        self.setWindowTitle('工具箱  '+self.localip)
+        self.setWindowTitle('工具箱--'+str(ips))
         # 设置窗口图标
         self.setWindowIcon(self.generateIcon())
         # 窗口大小
