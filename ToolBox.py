@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import os
 import re
+from collections import Counter
 import emoji
 import requests
 import webbrowser
@@ -25,8 +26,8 @@ from PySide2.QtCore import QSize, Qt
 appname = '''ToolBox'''
 appmessage = '''一款小小的自用的工具箱'''
 author = '''ordinary-student'''
-version = '''v2.1.0'''
-last_update = '''2021-07-14'''
+version = '''v2.1.1'''
+last_update = '''2021-08-04'''
 left_widget_qss = '''
 QListWidget, QListView, QTreeWidget, QTreeView {
     outline: 0px;
@@ -324,6 +325,8 @@ class ToolBox(QMainWindow):
         self.gridLayout_ip.setSpacing(5)
         # IP标签列表
         self.iplabel_list = []
+        # 结果列表
+        self.result_list = []
         # 索引
         list_index = 0
         # 循环添加
@@ -864,6 +867,8 @@ class ToolBox(QMainWindow):
 
     def set_ui(self, result: bool, ip: str):
         '''设置窗口颜色 result：线程ping的结果 ip：对应的IP地址'''
+        # 添加检测结果
+        self.result_list.append(result)
         # 获取索引
         index = int(ip.split('.')[3])
         # 判断结果
@@ -875,6 +880,10 @@ class ToolBox(QMainWindow):
             # 设置背景为红色
             self.iplabel_list[index].setStyleSheet(
                 "background-color: rgb(255, 142, 119);")
+
+        # 统计结果
+        frequency = Counter(self.result_list)
+        self.statusbar.showMessage(str(frequency))
 
     def is_ip_online(self, ip: str):
         '''检测IP是否在线'''
@@ -898,6 +907,8 @@ class ToolBox(QMainWindow):
 
     def start_ping(self):
         '''开始Ping检测'''
+        self.result_list = []
+        self.statusbar.showMessage('检测中...')
         # 获取IP
         startip_str = self.lineEdit_startIP.text()
         endip_str = self.lineEdit_endIP.text()
